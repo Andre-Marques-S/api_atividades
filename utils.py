@@ -1,4 +1,6 @@
 from models import Pessoas
+from models import Usuarios
+from random import randint
 
 
 def insere_pessoas():
@@ -25,8 +27,34 @@ def exclui_pessoas():
     pessoa.delete()
 
 
+def insere_usuario(login, senha):
+    usuario = Usuarios(login=login, senha=senha)
+    usuario_db = Usuarios.query.all()
+    response = [i.login for i in usuario_db]
+    if not (usuario.login in response):
+        usuario.save()
+        print(usuario)
+    else:
+        print("Esse usuario já está cadastrado")
+
+
+def get_usuario():
+    usuario = Usuarios.query.all()
+    response = [{'id': i.id, 'login': i.login, 'senha': i.senha} for i in usuario]
+    print(response, len(response))
+
+
+def status(status):
+    status = status
+
+    print(status)
+    if status:
+        print("Status concluido")
+
+
 if __name__ == '__main__':
-    exclui_pessoas()
-    consulta()
+    insere_usuario("Andre", "123456")
+    get_usuario()
+
 
 
